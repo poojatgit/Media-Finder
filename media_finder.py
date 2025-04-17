@@ -30,8 +30,10 @@ class MediaItem:
         """
         show the user a readable verision of the attributes 
         """
+        pass
     
     def test_media(self):
         """
         this will test the class and make sure that it is running smoothly 
         """
+        pass
