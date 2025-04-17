@@ -37,3 +37,14 @@ class MediaItem:
         this will test the class and make sure that it is running smoothly 
         """
         pass
+
+class MediaTracker:
+
+    def __init__(self):
+        pass
+
+    def generate_recommendations(self):
+        pass
+
+    def get_similar_titles(self, genre):
+        pass
