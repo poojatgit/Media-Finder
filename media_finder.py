@@ -39,12 +39,24 @@ class MediaItem:
         pass
 
 class MediaTracker:
+    """
+    A class representing tracking of a user's watchlist by giving reccommendations and filtering
+
+    Attributes:
+        watchlist (list): The list of MediaItem objects added by the user. 
+    """
 
     def __init__(self):
         pass
 
     def generate_recommendations(self):
+        """
+        generates reccommended titles based on the titles in the user watchlist
+        """
         pass
 
     def get_similar_titles(self, genre):
+        """
+        returns list of titles in watchlist that match given genre
+        """
         pass
