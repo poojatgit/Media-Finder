@@ -49,6 +49,12 @@ class MediaTracker:
     def __init__(self):
         pass
 
+    def add_title(self, title, genre, platform):
+        """
+        lets user add new watch item to watchlist
+        """
+        pass
+
     def generate_recommendations(self):
         """
         generates reccommended titles based on the titles in the user watchlist
