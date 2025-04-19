@@ -66,3 +66,35 @@ class MediaTracker:
         returns list of titles in watchlist that match given genre
         """
         pass
+
+class Filters():
+    """
+    A class representing filtering functions according to the user's inputted watchlist.
+
+    Attributes:
+        watchlist (list of str): List of strings representing MediaItem objects. 
+    """
+
+    def filter_by_genre (self, genre):
+        """
+        Filters media by specified genre.
+
+        Args:
+            genre (str): Genre user wants to filter by.
+
+        Returns: 
+            list: A list representation of MediaItem instances that matches genre for user.
+        """
+        pass
+
+    def filter_by_status (self, ):
+        """
+        Filters media based on inputted completion status.
+
+        Args:
+            status (str): The status to filter the media accordingly. 
+
+        Returns:
+            list: A list representation of MediaItem instances that matches status for user. 
+        """
+        pass
