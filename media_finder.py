@@ -98,3 +98,52 @@ class Filters():
             list: A list representation of MediaItem instances that matches status for user. 
         """
         pass
+        
+
+class Input:
+    """
+    A class to handle user input for media tracking and filtering.
+
+    Attributes:
+        title (str): The title of the media.
+        genre (str): The genre of the media.
+        platform (str): The streaming platform where the media is available.
+        status (str): The completion status of the media ('completed' or 'not completed').
+        year_range (tuple): A tuple containing the start and end years for filtering.
+    """
+
+    def __init__(self):
+        """
+        Initializes the Input object with default values.
+        """
+        pass
+
+    def get_title(self):
+        """
+        Prompts the user to input the title of the media.
+        """
+        pass
+
+    def get_genre(self):
+        """
+        Prompts the user to input the genre of the media.
+        """
+        pass
+
+    def get_platform(self):
+        """
+        Prompts the user to input the streaming platform of the media.
+        """
+        pass
+
+    def get_status(self):
+        """
+        Prompts the user to input the completion status of the media.
+        """
+        pass
+
+    def get_year_range(self):
+        """
+        Prompts the user to input the start and end years for filtering.
+        """
+        pass
