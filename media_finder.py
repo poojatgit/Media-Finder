@@ -31,12 +31,7 @@ class MediaItem:
         show the user a readable verision of the attributes 
         """
         pass
-    
-    def test_media(self):
-        """
-        this will test the class and make sure that it is running smoothly 
-        """
-        pass
+
 
 class MediaTracker:
     """
@@ -74,7 +69,9 @@ class Filters():
     Attributes:
         watchlist (list of str): List of strings representing MediaItem objects. 
     """
-
+    def __init__(self):
+        self.watchlist = []
+    
     def filter_by_genre (self, genre):
         """
         Filters media by specified genre.
@@ -148,10 +145,5 @@ class Input:
         """
         pass
 
-    def test_input(self):
-        """
-        Tests the Input class to ensure it functions correctly.
-        """
-        pass
 
       
