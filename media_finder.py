@@ -147,3 +147,11 @@ class Input:
         Prompts the user to input the start and end years for filtering.
         """
         pass
+
+    def test_input(self):
+        """
+        Tests the Input class to ensure it functions correctly.
+        """
+        pass
+
+      
