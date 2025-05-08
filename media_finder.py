@@ -51,7 +51,7 @@ class MediaManager:
         if not match.empty:
             specific_row = match.iloc[0]
             media = MediaItem(specific_row['title'], specific_row['Genre'], platform)
-            self.completed[counter] = media #FIX CSV TO TITLE, GENRE, LAST COLUMN ORDER
+            self.completed[counter] = media 
             counter += 1
             print(f"{specific_row['title']} marked as completed!")
 
@@ -69,17 +69,41 @@ class MediaManager:
                 print("Manual entry skipped")
 
 
-    def where_to_watch(self):
+    def where_to_watch(self, title):
         """
         finds the platform where the media is and returns where it can be watched
         """
-        pass
+        title = title.strip().lower()
+        source = ""
+        media = None
+    
+        df_n = pd.read_csv("Netflix.csv")
+        match = df_n[df_n['title'].lower() == title]
+        if not match.empty:
+            specific_row = match.iloc[0]
+            source = "Netflix"
+            media = MediaItem(specific_row['title'], specific_row['Genre'], source)
+        
+        else:
+            df_p = pd.read_csv("Prime.csv")
+            match = df_p[df_p['title'].lower() == title]
+            if not match.empty:
+                specific_row = match.iloc[0]
+                source = "Prime"
+                media = MediaItem(specific_row['title'], specific_row['Genre'], source)
 
-    def __repr__(self):
-        """
-        show the user a readable verision of the attributes 
-        """
-        pass
+
+        if media:
+            print(f"Found: {media}")
+            should_add = input("Do you want to add this to your watchlist? (yes/no): ").strip().lower()
+            
+            if should_add == "yes":
+                self.watchlist[title] = media
+                print(f"{title} added to watchlist!")           
+
+        else:
+                print(f"{title} is not found.")       
+
 
 
 class MediaTracker:
