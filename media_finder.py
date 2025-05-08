@@ -12,6 +12,20 @@ class MediaItem:
     """
 
     def __init__(self, title, genre, platform):
+        self.title = title
+
+        if genre:
+            self.genre = genre
+        else:
+            self.genre = "Unknown"
+
+        self.platform = platform
+
+    def __repr__(self):
+        return f"{self.title} on {self.platform}\nGenre:{self.genre}"
+        
+class MediaManager:
+    def __init__(self):
         pass
 
     def mark_completed(self):
