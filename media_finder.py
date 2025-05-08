@@ -38,7 +38,11 @@ class MediaManager:
 
     def mark_completed(self, title, platform):
         """
-        Marks the media item as completed or not completed
+        adds completed media into a dictionary to keep track
+
+        Args:
+        title (str): title of the movie/show
+        platform (str): platform of the movie/show
         """
         title = title.strip().lower()
         platform = platform.strip().lower()
