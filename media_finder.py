@@ -83,7 +83,10 @@ class MediaManager:
 
     def where_to_watch(self, title):
         """
-        finds the platform where the media is and returns where it can be watched
+        finds the platform where the media located, then adds to watchlist
+
+        Args:
+        title (str): title of the movie/show
         """
         title = title.strip().lower()
         source = ""
