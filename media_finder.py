@@ -2,12 +2,11 @@
 
 class MediaItem:
     """
-    A class representing a media item such as a movie or TV show and updating the status of them.
+    Represents a media item (a movie or tv show)
 
     Attributes:
         title (str): The title of the media.
         genre (str): The genre of the media.
-        status (str): The completion status, either 'not completed' or 'completed'.
         platform (str): The streaming service where the media is available.
     """
 
