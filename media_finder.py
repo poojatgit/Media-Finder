@@ -1,4 +1,4 @@
-
+import pandas as pd
 
 class MediaItem:
     """
@@ -25,7 +25,8 @@ class MediaItem:
         
 class MediaManager:
     def __init__(self):
-        pass
+        self.watchlist = {}
+        self.completed = {}
 
     def mark_completed(self):
         """
