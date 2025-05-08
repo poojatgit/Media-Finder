@@ -24,6 +24,14 @@ class MediaItem:
         return f"{self.title} on {self.platform}\nGenre:{self.genre}"
         
 class MediaManager:
+    """ 
+    Manages the watchlist and completed items using MediaItem objects
+
+    Attributes:
+    watchlist (dict): users watchlist filled with MediaItem objects
+    completed (dict): users completed movies/shows filled with MediaItem objects
+    
+    """
     def __init__(self):
         self.watchlist = {}
         self.completed = {}
