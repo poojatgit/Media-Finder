@@ -28,11 +28,46 @@ class MediaManager:
         self.watchlist = {}
         self.completed = {}
 
-    def mark_completed(self):
+    def mark_completed(self, title, platform):
         """
         Marks the media item as completed or not completed
         """
-        pass
+        title = title.strip().lower()
+        platform = platform.strip().lower()
+
+        df = None
+        if platform == "netflix":
+            df = pd.read_csv("Netflix.csv")
+
+        elif platform == "prime":
+            df = pd.read_csv("Prime.csv")
+
+        else:
+            print("Platform not available. Use 'Netflix' or 'Prime'")
+            return
+        
+        match = df[df['title'].lower() == title]
+        counter = 1
+        if not match.empty:
+            specific_row = match.iloc[0]
+            media = MediaItem(specific_row['title'], specific_row['Genre'], platform)
+            self.completed[counter] = media #FIX CSV TO TITLE, GENRE, LAST COLUMN ORDER
+            counter += 1
+            print(f"{specific_row['title']} marked as completed!")
+
+        else:
+            print(f"{title} not found in {platform}")
+            #Added an option were they can enter movie themselves manually
+            manual = input("Do you want to add it manually? (yes/no): ").strip().lower()
+            if manual == "yes":
+                genre = input("Enter genre: ").strip()
+                media = MediaItem(title, platform, genre)
+                self.completed[counter] = media
+                print(f"{title} manually marked completed!")
+            
+            else:
+                print("Manual entry skipped")
+
 
     def where_to_watch(self):
         """
