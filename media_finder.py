@@ -157,8 +157,9 @@ class Filters():
     Attributes:
         watchlist (list of str): List of strings representing MediaItem objects. 
     """
-    def __init__(self):
-        self.watchlist = []
+    def __init__(self, media_manager, movies):
+        self.media_manager = media_manager
+        self.movies = pd.read_csv(movies)
     
     def filter_by_genre (self, genre):
         """
@@ -170,7 +171,9 @@ class Filters():
         Returns: 
             list: A list representation of MediaItem instances that matches genre for user.
         """
-        pass
+        filtered = self.movies[self.movies["Genre"].str.contains(genre, case=False)]
+        return filtered
+
 
     def filter_by_status (self, ):
         """
@@ -233,5 +236,23 @@ class Input:
         """
         pass
 
+    def get_genre(self): # make sure to make optional or something
+        """
+        Prompts the user to input a genre.
+        """
+        pass
 
-      
+def main():
+    """
+    Calls different classes with required inputs.
+    """
+    media_manager = MediaManager()
+    filters = Filters(media_manager, "netflix.csv")
+    user_input = Input()
+
+    genre = user_input.get_genre()
+    filtered_genre = filters.filter_by_genre(genre) # add statement for if NO genre inputted
+
+
+if __name__ == "__main__":
+    main()      
