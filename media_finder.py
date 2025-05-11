@@ -130,7 +130,7 @@ class MediaTracker:
     """
 
     def __init__(self):
-        pass
+        self.watchlist= []
 
     def add_title(self, title, genre, platform):
         """
