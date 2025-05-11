@@ -158,7 +158,9 @@ class MediaTracker:
         # show titles based on user watchlist
 
         # read netflix.csv and prime.csv
-
+        netflix_df= pd.read_csv("Netflix.csv")
+        prime_df= pd.read_csv("Prime.csv")
+        
         # combine dataframes
 
         # find common genres
