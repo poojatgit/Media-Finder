@@ -150,7 +150,20 @@ class MediaTracker:
         """
         generates reccommended titles based on the titles in the user watchlist
         """
-        pass
+        # notify user when watchlist empty
+        if not self.watchlist:
+            print("Your watchlist is empty. Please add some titles.")
+            return []
+
+        # show titles based on user watchlist
+
+        # read netflix.csv and prime.csv
+
+        # combine dataframes
+
+        # find common genres
+
+        # list top 5 titles and genres based on watchlist
 
     def get_similar_titles(self, genre):
         """
