@@ -200,59 +200,27 @@ class Input:
         year_range (tuple): A tuple containing the start and end years for filtering.
     """
 
-    def __init__(self):
-        """
-        Initializes the Input object with default values.
-        """
+        def __init__(self):
         pass
 
     def get_title(self):
-        """
-        Prompts the user to input the title of the media.
-        """
-        pass
+        title = input("Enter the movie/show title: ").strip()
+        return title
 
     def get_genre(self):
-        """
-        Prompts the user to input the genre of the media.
-        """
-        pass
+        genre = input("Enter the genre (or press Enter to skip): ").strip()
+        return genre
 
     def get_platform(self):
-        """
-        Prompts the user to input the streaming platform of the media.
-        """
-        pass
+        platform = input("Enter the platform (Netflix or Prime): ").strip().capitalize()
+        return platform
 
     def get_status(self):
-        """
-        Prompts the user to input the completion status of the media.
-        """
-        pass
+        status = input("Enter status (Watched/Unwatched): ").strip().capitalize()
+        return status
 
     def get_year_range(self):
-        """
-        Prompts the user to input the start and end years for filtering.
-        """
-        pass
-
-    def get_genre(self): # make sure to make optional or something
-        """
-        Prompts the user to input a genre.
-        """
-        pass
-
-def main():
-    """
-    Calls different classes with required inputs.
-    """
-    media_manager = MediaManager()
-    filters = Filters(media_manager, "netflix.csv")
-    user_input = Input()
-
-    genre = user_input.get_genre()
-    filtered_genre = filters.filter_by_genre(genre) # add statement for if NO genre inputted
-
-
-if __name__ == "__main__":
-    main()      
+        start_year = input("Enter start year (or press Enter to skip): ").strip()
+        end_year = input("Enter end year (or press Enter to skip): ").strip()
+        return start_year, end_year
+     
