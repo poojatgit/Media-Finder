@@ -200,7 +200,7 @@ class Input:
         year_range (tuple): A tuple containing the start and end years for filtering.
     """
 
-        def __init__(self):
+    def __init__(self):
         pass
 
     def get_title(self):
