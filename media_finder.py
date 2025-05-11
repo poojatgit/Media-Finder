@@ -135,6 +135,11 @@ class MediaTracker:
     def add_title(self, title, genre, platform):
         """
         lets user add new watch item to watchlist
+
+        Args:
+            title (str): title of media
+            genre (str): genre of media 
+            platform (str): platform of media
         """
         pass
 
