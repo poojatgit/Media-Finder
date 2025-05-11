@@ -141,7 +141,10 @@ class MediaTracker:
             genre (str): genre of media 
             platform (str): platform of media
         """
-        pass
+        media = MediaItem(title, genre, platform)
+
+        self.watchlist.append(media) # adds new media item to watchlist
+        print(f"New media item added to watchlist: {media}")
 
     def generate_recommendations(self):
         """
