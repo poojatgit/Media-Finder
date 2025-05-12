@@ -175,14 +175,15 @@ class MediaTracker:
 
 class Filters():
     """
-    A class representing filtering functions according to the user's inputted watchlist.
+    A class representing filtering functions according to the user's inputted watchlist and Netflix CSV file.
 
     Attributes:
         watchlist (list of str): List of strings representing MediaItem objects. 
     """
-    def __init__(self, media_manager, movies):
+    def __init__(self, media_manager, movies, watchlist):
         self.media_manager = media_manager
         self.movies = pd.read_csv(movies)
+        self.watchlist = watchlist
     
     def filter_by_genre (self, genre):
         """
@@ -192,13 +193,13 @@ class Filters():
             genre (str): Genre user wants to filter by.
 
         Returns: 
-            list: A list representation of MediaItem instances that matches genre for user.
+            dataframe: A pandas dataframe representation of MediaItem instances that matches genre for user.
         """
         filtered = self.movies[self.movies["Genre"].str.contains(genre, case=False)]
-        return filtered
+        return filtered # returns movies from CSV filtered by inputted genre
 
 
-    def filter_by_status (self, ):
+    def filter_by_status (self, status):
         """
         Filters media based on inputted completion status.
 
@@ -208,9 +209,26 @@ class Filters():
         Returns:
             list: A list representation of MediaItem instances that matches status for user. 
         """
-        pass
+        status = status.strip().lower() 
+        completed_filter = [] # list for completed media items
+        incompleted_filter = [] # list for incompleted media items
         
+        for media in self.watchlist.values():
+            if media.status.lower() == "completed":
+                completed_filter.append(media) 
+            else:
+                incompleted_filter.append(media)
 
+        # sorts lists by movie title
+        completed_filter.sort(key=lambda x: x.title) 
+        incompleted_filter.sort(key=lambda x: x.title)    
+
+        # returning sorted lists based off user input
+        if status == "completed": 
+            return completed_filter + incompleted_filter
+        elif status == "not completed":
+            return incompleted_filter + completed_filter       
+        
 class Input:
     """
     A class to handle user input for media tracking and filtering.
@@ -243,7 +261,56 @@ class Input:
         return status
 
     def get_year_range(self):
+        """
+        Prompts the user to input the start and end years for filtering.
+        """
         start_year = input("Enter start year (or press Enter to skip): ").strip()
         end_year = input("Enter end year (or press Enter to skip): ").strip()
         return start_year, end_year
+
+    def get_genre(self): 
+        """
+        Prompts the user to input a genre.
+        """
+        genre = input("Enter genre for recommendations or press Enter to skip.")
+
+        if genre:
+            return genre
+        else:
+            return None
+        
+    def get_status_filter(self):
+        """
+        Prompts the user to input status to filter by.
+        """
+        filter_status = input("Enter 'completed' or 'not completed' " \
+        "to filter your watchlist or press Enter to skip.")
+
+        if filter_status:
+            return filter_status
+        else:
+            return None
+
+def main():
+    """
+    Calls different classes with required inputs.
+    """
+    media_manager = MediaManager() 
+    watchlist = media_manager.watchlist 
+    filters = Filters(media_manager, "netflix.csv", watchlist)
+    user_input = Input()
+
+    genre = user_input.get_genre() # pulls genre input
+    # if genre inputted, call filters to filter by genre
+    if genre:
+        filters.filter_by_genre(genre) 
+
+    status = user_input.get_status_filter() # pulls status input
+    # if status inputted, call filters to filter by status
+    if status:
+        filters.filter_by_status(status)
+
+if __name__ == "__main__":
+    main()      
+
      
