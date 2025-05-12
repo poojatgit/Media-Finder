@@ -196,7 +196,10 @@ class Filters():
             dataframe: A pandas dataframe representation of MediaItem instances that matches genre for user.
         """
         filtered = self.movies[self.movies["Genre"].str.contains(genre, case=False)]
-        return filtered # returns movies from CSV filtered by inputted genre
+        if len(filtered) >=1:
+            return filtered # returns movies from CSV filtered by inputted genre
+        else:
+            return "We have found no media in this genre."
 
 
     def filter_by_status (self, status):
@@ -303,12 +306,12 @@ def main():
     genre = user_input.get_genre() # pulls genre input
     # if genre inputted, call filters to filter by genre
     if genre:
-        filters.filter_by_genre(genre) 
+        print(filters.filter_by_genre(genre))
 
     status = user_input.get_status_filter() # pulls status input
     # if status inputted, call filters to filter by status
     if status:
-        filters.filter_by_status(status)
+        print(filters.filter_by_status(status))
 
 if __name__ == "__main__":
     main()      
