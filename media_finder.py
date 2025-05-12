@@ -69,7 +69,7 @@ class MediaManager:
 
         else:
             print(f"{title} not found in {platform}")
-            #Added an option were they can enter movie themselves manually
+            # Added an option were they can enter movie themselves manually
             manual = input("Do you want to add it manually? (yes/no): ").strip().lower()
             if manual == "yes":
                 genre = input("Enter genre: ").strip()
@@ -180,10 +180,15 @@ class Filters():
     Attributes:
         watchlist (list of str): List of strings representing MediaItem objects. 
     """
-    def __init__(self, media_manager, movies, watchlist):
+    def __init__(self, media_manager, platform, watchlist):
         self.media_manager = media_manager
-        self.movies = pd.read_csv(movies)
+        self.platform = platform.strip().lower()
         self.watchlist = watchlist
+
+        if self.platform == "netflix":
+            self.movies = pd.read_csv("Netflix.csv")
+        elif self.platform == "prime":
+            self.movies = pd.read_csv("Prime.csv")
     
     def filter_by_genre (self, genre):
         """
@@ -227,7 +232,9 @@ class Filters():
         incompleted_filter.sort(key=lambda x: x.title)    
 
         # returning sorted lists based off user input
-        if status == "completed": 
+        if (len(completed_filter) == 0) and (len(incompleted_filter) == 0):
+            return "There is no media inputted."
+        elif status == "completed": 
             return completed_filter + incompleted_filter
         elif status == "not completed":
             return incompleted_filter + completed_filter       
@@ -271,11 +278,11 @@ class Input:
         end_year = input("Enter end year (or press Enter to skip): ").strip()
         return start_year, end_year
 
-    def get_genre(self): 
+    def get_rec_genre(self): 
         """
         Prompts the user to input a genre.
         """
-        genre = input("Enter genre for recommendations or press Enter to skip.")
+        genre = input("Enter genre for recommendations or press Enter to skip: ")
 
         if genre:
             return genre
@@ -287,7 +294,7 @@ class Input:
         Prompts the user to input status to filter by.
         """
         filter_status = input("Enter 'completed' or 'not completed' " \
-        "to filter your watchlist or press Enter to skip.")
+        "to filter your watchlist or press Enter to skip: ")
 
         if filter_status:
             return filter_status
@@ -298,15 +305,24 @@ def main():
     """
     Calls different classes with required inputs.
     """
-    media_manager = MediaManager() 
-    watchlist = media_manager.watchlist 
-    filters = Filters(media_manager, "netflix.csv", watchlist)
     user_input = Input()
+    title = user_input.get_title()
+    rec_genre = user_input.get_rec_genre() # pulls genre input
+    platform = user_input.get_platform()
 
-    genre = user_input.get_genre() # pulls genre input
+
+    MediaItem(title, rec_genre, platform)
+
+    media_manager = MediaManager() 
+    
+    watchlist = media_manager.watchlist 
+
+    filters = Filters(media_manager, platform, watchlist)
+
+    
     # if genre inputted, call filters to filter by genre
-    if genre:
-        print(filters.filter_by_genre(genre))
+    if rec_genre:
+        print(filters.filter_by_genre(rec_genre))
 
     status = user_input.get_status_filter() # pulls status input
     # if status inputted, call filters to filter by status
