@@ -284,10 +284,10 @@ class Input:
 
     def questions(self):
         """
-        Prompts the user to input the title of the media.
+        Prompts the user to input the title, genre, platform, and status of the media
 
         Returns:
-            str: The entered title string.
+            tuple - consisting of the title, genre, platform, and status
         """
         title = input("Enter the movie/show title: ").strip()
         genre = input("Enter the genre (or press Enter to skip): ").strip()
