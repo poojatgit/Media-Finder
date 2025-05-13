@@ -250,25 +250,145 @@ class Input:
         status (str): The completion status of the media ('completed' or 'not completed').
         year_range (tuple): A tuple containing the start and end years for filtering.
     """
+    class Input:
+    """
+    A class to handle user input for media tracking and filtering.
+
+    Attributes:
+        title (str): The title of the media.
+        genre (str): The genre of the media.
+        platform (str): The streaming platform where the media is available.
+        status (str): The completion status of the media ('completed' or 'not completed').
+        year_range (tuple): A tuple containing the start and end years for filtering.
+    """
 
     def __init__(self):
+        """
+        Initializes the Input object.
+        """
         pass
 
+    def show_welcome(self):
+        """
+        Displays a welcome message and explains available features.
+        """
+        print("\nWelcome to Media Finder!")
+        print("You can filter recommendations, get personalized suggestions, and build your watchlist.")
+        print("Let's get started!\n")
+
     def get_title(self):
+        """
+        Prompts the user to input the title of the media.
+
+        Returns:
+            str: The entered title string.
+        """
         title = input("Enter the movie/show title: ").strip()
         return title
 
     def get_genre(self):
+        """
+        Prompts the user to input the genre of the media. Input is optional.
+
+        Returns:
+            str: The entered genre string.
+        """
         genre = input("Enter the genre (or press Enter to skip): ").strip()
         return genre
 
     def get_platform(self):
+        """
+        Prompts the user to input the streaming platform where the media is available.
+
+        Returns:
+            str: The entered platform string, capitalized.
+        """
         platform = input("Enter the platform (Netflix or Prime): ").strip().capitalize()
         return platform
 
     def get_status(self):
+        """
+        Prompts the user to input the completion status of the media.
+
+        Returns:
+            str: The entered status string ('Watched' or 'Unwatched').
+        """
         status = input("Enter status (Watched/Unwatched): ").strip().capitalize()
         return status
+
+    def get_year_range(self):
+        """
+        Prompts the user to input the start and end years for filtering. Input is optional.
+
+        Returns:
+            tuple: A tuple containing (start_year, end_year) as strings.
+        """
+        start_year = input("Enter start year (or press Enter to skip): ").strip()
+        end_year = input("Enter end year (or press Enter to skip): ").strip()
+        return start_year, end_year
+
+    def get_all_inputs(self):
+        """
+        Collects all user input fields in one go: title, genre, platform, status, and year range.
+
+        Returns:
+            dict: A dictionary containing all user responses.
+        """
+        title = self.get_title()
+        genre = self.get_genre()
+        platform = self.get_platform()
+        status = self.get_status()
+        start_year, end_year = self.get_year_range()
+
+        return {
+            "title": title,
+            "genre": genre,
+            "platform": platform,
+            "status": status,
+            "start_year": start_year,
+            "end_year": end_year
+        }
+
+    def get_status_filter(self):
+        """
+        Prompts the user to input status to filter by.
+        """
+        filter_status = input("Enter 'completed' or 'not completed' " \
+        "to filter your watchlist or press Enter to skip: ")
+
+        if filter_status:
+            return filter_status
+        else:
+            return None
+
+def main():
+    """
+    Calls different classes with required inputs.
+    """
+    user_input = Input()
+    title = user_input.get_title()
+    rec_genre = user_input.get_rec_genre() # pulls genre input
+    platform = user_input.get_platform()
+
+
+    MediaItem(title, rec_genre, platform)
+
+    media_manager = MediaManager() 
+    
+    watchlist = media_manager.watchlist 
+
+    filters = Filters(media_manager, platform, watchlist)
+
+    
+    # if genre inputted, call filters to filter by genre
+    if rec_genre:
+        print(filters.filter_by_genre(rec_genre))
+
+    status = user_input.get_status_filter() # pulls status input
+    # if status inputted, call filters to filter by status
+    if status:
+        print(filters.filter_by_status(status))
+
 
     def get_year_range(self):
         """
