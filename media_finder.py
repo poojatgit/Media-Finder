@@ -303,7 +303,7 @@ class Input:
             int - represents the function they want to do 
         """
         print("What would you like to do today?")
-        pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Build your Watchlist, (4)Quit: (1/2/3/4) ")
+        pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Find Movies/Tv Shows, (4)Quit: (1/2/3/4) ")
         while (pick != 1) or (pick !=2) or (pick != 3) or (pick != 4):
             pick = input("Try Again!\nMake sure to enter 1,2,3, or 4 as your option! ")
 
@@ -375,7 +375,18 @@ def main():
 
     filters = Filters(media_manager, platform, watchlist)
 
-    
+    # if user wants to add media to completed list 
+    # ask user what title and platform they want
+    # then call the method
+    media_manager.mark_completed(title, platform)
+
+    # if user want to find a movie or tv show
+    # ask them to enter a title 
+    # then call the method 
+    # this method will find which platform the media is in and ask if they want to add to watchlist
+    media_manager.where_to_watch(title)
+
+
     # if genre inputted, call filters to filter by genre
     if rec_genre:
         print(filters.filter_by_genre(rec_genre))
