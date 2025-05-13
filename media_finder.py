@@ -356,47 +356,7 @@ class Input:
             return filter_status
         else:
             return None
-
-def main():
-    """
-    Calls different classes with required inputs.
-    """
-    user_input = Input()
-    title = user_input.get_title()
-    rec_genre = user_input.get_rec_genre() # pulls genre input
-    platform = user_input.get_platform()
-
-
-    MediaItem(title, rec_genre, platform)
-
-    media_manager = MediaManager() 
-    
-    watchlist = media_manager.watchlist 
-
-    filters = Filters(media_manager, platform, watchlist)
-
-    # if user wants to add media to completed list 
-    # ask user what title and platform they want
-    # then call the method
-    media_manager.mark_completed(title, platform)
-
-    # if user want to find a movie or tv show
-    # ask them to enter a title 
-    # then call the method 
-    # this method will find which platform the media is in and ask if they want to add to watchlist
-    media_manager.where_to_watch(title)
-
-
-    # if genre inputted, call filters to filter by genre
-    if rec_genre:
-        print(filters.filter_by_genre(rec_genre))
-
-    status = user_input.get_status_filter() # pulls status input
-    # if status inputted, call filters to filter by status
-    if status:
-        print(filters.filter_by_status(status))
-
-
+        
     def get_year_range(self):
         """
         Prompts the user to input the start and end years for filtering.
@@ -446,7 +406,18 @@ def main():
 
     filters = Filters(media_manager, platform, watchlist)
 
-    
+    # if user wants to add media to completed list 
+    # ask user what title and platform they want
+    # then call the method
+    media_manager.mark_completed(title, platform)
+
+    # if user want to find a movie or tv show
+    # ask them to enter a title 
+    # then call the method 
+    # this method will find which platform the media is in and ask if they want to add to watchlist
+    media_manager.where_to_watch(title)
+
+
     # if genre inputted, call filters to filter by genre
     if rec_genre:
         print(filters.filter_by_genre(rec_genre))
@@ -455,6 +426,7 @@ def main():
     # if status inputted, call filters to filter by status
     if status:
         print(filters.filter_by_status(status))
+
 
 if __name__ == "__main__":
     main()      
