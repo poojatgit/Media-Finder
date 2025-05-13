@@ -184,10 +184,18 @@ class MediaTracker:
         match_genre = [item for item in self.watchlist if genre in item.genre]
 
         # print matches if found
+        if match_genre:
+            num = len(match_genre)
+            print(f"Found {num} in genre '{genre}':")
+            for item in match_genre:
+                print(f"{item.title} ({item.platform})")
 
-        # if no matching titles were found, tell user
+        else:
+             # if no matching titles were found, tell user
+            print(f"There were no titles found in genre '{genre}'")
 
         # return list
+        return match_genre
 
 class Filters():
     """
