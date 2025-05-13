@@ -155,7 +155,6 @@ class MediaTracker:
             print("Your watchlist is empty. Please add some titles.")
             return []
 
-
         # read netflix.csv and prime.csv
         netflix_df = pd.read_csv("Netflix.csv")
         prime_df = pd.read_csv("Prime.csv")
@@ -171,7 +170,11 @@ class MediaTracker:
 
         most_common_genre = max(common_genre, key=common_genre.get)
 
-        # list top 5 titles and genres based on watchlist
+        genre_recs = combined_df[combined_df["Genre"].str.contains(most_common_genre, case=False)]
+
+        # list top 5 recommendations based on watchlist
+        print(f"Based on your interest in {most_common_genre}, here are some recommendations:")
+        print(genre_recs[["title", "Genre"]].head(5).to_string(index=False))
 
     def get_similar_titles(self, genre):
         """
