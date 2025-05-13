@@ -250,17 +250,6 @@ class Input:
         status (str): The completion status of the media ('completed' or 'not completed').
         year_range (tuple): A tuple containing the start and end years for filtering.
     """
-    class Input:
-    """
-    A class to handle user input for media tracking and filtering.
-
-    Attributes:
-        title (str): The title of the media.
-        genre (str): The genre of the media.
-        platform (str): The streaming platform where the media is available.
-        status (str): The completion status of the media ('completed' or 'not completed').
-        year_range (tuple): A tuple containing the start and end years for filtering.
-    """
 
     def __init__(self):
         """
