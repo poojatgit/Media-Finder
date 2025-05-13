@@ -164,6 +164,12 @@ class MediaTracker:
         combined_df = pd.concat([netflix_df, prime_df], ignore_index=True)
 
         # find common genres
+        common_genre = {}
+        for item in self.watchlist:
+            genre = item.genre.lower()
+            common_genre[genre] = common_genre.get(genre, 0) + 1
+
+        most_common_genre = max(common_genre, key=common_genre.get)
 
         # list top 5 titles and genres based on watchlist
 
