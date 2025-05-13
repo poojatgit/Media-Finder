@@ -295,6 +295,17 @@ class Input:
         status = input("Enter status (Watched/Unwatched): ").strip().capitalize()
         return title, genre, platform, status
     
+    def option(self):
+        print("What would you like to do today?")
+        pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Build your Watchlist, (4)Quit: (1/2/3/4) ")
+        while (pick != 1) or (pick !=2) or (pick != 3) or (pick != 4):
+            pick = input("Try Again!\nMake sure to enter 1,2,3, or 4 as your option! ")
+
+        if pick == 4:
+            quit 
+
+        return pick
+    
     def get_year_range(self):
         """
         Prompts the user to input the start and end years for filtering. Input is optional.
