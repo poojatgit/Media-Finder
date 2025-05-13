@@ -296,6 +296,12 @@ class Input:
         return title, genre, platform, status
     
     def option(self):
+        """
+        Asks user what actions they want to do
+
+        Returns:
+            int - represents the function they want to do 
+        """
         print("What would you like to do today?")
         pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Build your Watchlist, (4)Quit: (1/2/3/4) ")
         while (pick != 1) or (pick !=2) or (pick != 3) or (pick != 4):
