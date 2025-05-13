@@ -180,7 +180,14 @@ class MediaTracker:
         """
         returns list of titles in watchlist that match given genre
         """
-        pass
+        # list of media items in watchlist that match given genre
+        match_genre = [item for item in self.watchlist if genre in item.genre]
+
+        # print matches if found
+
+        # if no matching titles were found, tell user
+
+        # return list
 
 class Filters():
     """
