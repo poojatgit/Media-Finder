@@ -274,13 +274,6 @@ class Input:
         status (str): The completion status of the media ('completed' or 'not completed').
         year_range (tuple): A tuple containing the start and end years for filtering.
     """
-
-    def __init__(self):
-        """
-        Initializes the Input object.
-        """
-        pass
-
     def show_welcome(self):
         """
         Displays a welcome message and explains available features.
@@ -289,7 +282,7 @@ class Input:
         print("You can filter recommendations, get personalized suggestions, and build your watchlist.")
         print("Let's get started!\n")
 
-    def get_title(self):
+    def questions(self):
         """
         Prompts the user to input the title of the media.
 
@@ -297,38 +290,11 @@ class Input:
             str: The entered title string.
         """
         title = input("Enter the movie/show title: ").strip()
-        return title
-
-    def get_genre(self):
-        """
-        Prompts the user to input the genre of the media. Input is optional.
-
-        Returns:
-            str: The entered genre string.
-        """
         genre = input("Enter the genre (or press Enter to skip): ").strip()
-        return genre
-
-    def get_platform(self):
-        """
-        Prompts the user to input the streaming platform where the media is available.
-
-        Returns:
-            str: The entered platform string, capitalized.
-        """
         platform = input("Enter the platform (Netflix or Prime): ").strip().capitalize()
-        return platform
-
-    def get_status(self):
-        """
-        Prompts the user to input the completion status of the media.
-
-        Returns:
-            str: The entered status string ('Watched' or 'Unwatched').
-        """
         status = input("Enter status (Watched/Unwatched): ").strip().capitalize()
-        return status
-
+        return title, genre, platform, status
+    
     def get_year_range(self):
         """
         Prompts the user to input the start and end years for filtering. Input is optional.
