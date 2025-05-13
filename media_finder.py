@@ -155,13 +155,13 @@ class MediaTracker:
             print("Your watchlist is empty. Please add some titles.")
             return []
 
-        # show titles based on user watchlist
 
         # read netflix.csv and prime.csv
-        netflix_df= pd.read_csv("Netflix.csv")
-        prime_df= pd.read_csv("Prime.csv")
+        netflix_df = pd.read_csv("Netflix.csv")
+        prime_df = pd.read_csv("Prime.csv")
         
         # combine dataframes
+        combined_df = pd.concat([netflix_df, prime_df], ignore_index=True)
 
         # find common genres
 
