@@ -1,8 +1,8 @@
 import unittest
-import pandas as pd
-from media_finder import MediaItem, MediaManager, MediaTracker, Filters, Input
+from media_finder import MediaItem, MediaManager, MediaTracker, Filters
 
 class TestMediaManager(unittest.TestCase):
+    """ Purpose: These are the tests for the MediaManager class. After prompting the return should be "OK" if it runs properly. """
     def setUp(self):
         self.media = MediaManager()
 
@@ -24,6 +24,7 @@ class TestMediaManager(unittest.TestCase):
         self.assertIsNone(self.media.where_to_watch("Barbie"))
 
 class TestMediaTracker(unittest.TestCase):
+    """ Purpose: These are the tests for the MediaTracker class. The return should be "OK" if it runs properly. """
     def setUp(self):
         self.tracker = MediaTracker()
 
@@ -48,6 +49,7 @@ class TestMediaTracker(unittest.TestCase):
         self.assertEqual(similar[0].title, "Barbie")
 
 class TestFilters(unittest.TestCase):
+    """ Purpose: These are the tests for the Filters class. After prompting the return should be "OK" if it runs properly. """
     def setUp(self):
         self.media = MediaManager()
         self.filter = Filters(self.media, "netflix", self.media.watchlist)
@@ -64,28 +66,6 @@ class TestFilters(unittest.TestCase):
         self.media.mark_completed("Bridgerton", "Netflix")
         completed = self.filter.filter_by_status("completed")
         self.assertEqual(completed[0].title, "Bridgerton")
-
-# class TestInput(unittest.TestCase):
-#     def test_get_title(self):
-#         input = Input()
-#         self.assertIsNone(input.get_title())
-
-
-#     def test_get_genre(self):
-#         input = Input()
-#         self.assertIsNone(input.get_genre())
-
-#     def test_get_platform(self):
-#         input = Input()
-#         self.assertIsNone(input.get_platform())
-
-#     def test_get_status(self):
-#         input = Input()
-#         self.assertIsNone(input.get_status())
-
-#     def test_get_year_range(self):
-#         input = Input()
-#         self.assertIsNone(input.get_year_range())
 
 if __name__ == "__main__":
     unittest.main()
