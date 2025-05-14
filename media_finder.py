@@ -311,56 +311,6 @@ class Input:
             quit 
 
         return pick
-    
-    def get_year_range(self):
-        """
-        Prompts the user to input the start and end years for filtering. Input is optional.
-
-        Returns:
-            tuple: A tuple containing (start_year, end_year) as strings.
-        """
-        start_year = input("Enter start year (or press Enter to skip): ").strip()
-        end_year = input("Enter end year (or press Enter to skip): ").strip()
-        return start_year, end_year
-
-    def get_all_inputs(self):
-        """
-        Collects all user input fields in one go: title, genre, platform, status, and year range.
-
-        Returns:
-            dict: A dictionary containing all user responses.
-        """
-        title, genre, platform, status = self.questions()
-        start_year, end_year = self.get_year_range()
-
-        return {
-            "title": title,
-            "genre": genre,
-            "platform": platform,
-            "status": status,
-            "start_year": start_year,
-            "end_year": end_year
-        }
-
-    def get_status_filter(self):
-        """
-        Prompts the user to input status to filter by.
-        """
-        filter_status = input("Enter 'completed' or 'not completed' " \
-        "to filter your watchlist or press Enter to skip: ")
-
-        if filter_status:
-            return filter_status
-        else:
-            return None
-        
-    def get_year_range(self):
-        """
-        Prompts the user to input the start and end years for filtering.
-        """
-        start_year = input("Enter start year (or press Enter to skip): ").strip()
-        end_year = input("Enter end year (or press Enter to skip): ").strip()
-        return start_year, end_year
 
     def get_rec_genre(self): 
         """
@@ -391,35 +341,33 @@ def main():
     """
     user_input = Input()
     user_input.show_welcome()
-    user_input.questions()
+    title, genre, platform, status = user_input.questions()
     user_input.option()
-    user_input.get_year_range()
     
     rec_genre = user_input.get_rec_genre() # pulls genre input
 
     media_manager = MediaManager()
-    inputs = user_input.get_all_inputs()
     watchlist = media_manager.watchlist 
 
-    filter = Filters(media_manager, inputs['platform'], watchlist)
+    filter = Filters(media_manager, platform, watchlist)
     # if genre inputted, call filters to filter by genre
     if rec_genre:
         print(filter.filter_by_genre(rec_genre))
 
-    MediaItem(inputs['title'], rec_genre, inputs['platform']) 
+    MediaItem(title, rec_genre, platform) 
 
-    filters = Filters(media_manager, inputs['platform'], watchlist)
+    filters = Filters(media_manager, platform, watchlist)
 
     # if user wants to add media to completed list 
     # ask user what title and platform they want
     # then call the method
-    media_manager.mark_completed(inputs['title'], inputs['platform'])
+    media_manager.mark_completed(title, platform)
 
     # if user want to find a movie or tv show
     # ask them to enter a title 
     # then call the method 
     # this method will find which platform the media is in and ask if they want to add to watchlist
-    media_manager.where_to_watch(inputs['title'])
+    media_manager.where_to_watch(title)
 
     status = user_input.get_status_filter() # pulls status input
     # if status inputted, call filters to filter by status
