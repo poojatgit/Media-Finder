@@ -58,7 +58,7 @@ class MediaManager:
             print("Platform not available. Use 'Netflix' or 'Prime'")
             return
         
-        match = df[df['title'].lower() == title]
+        match = df[df['title'].str.lower() == title]
         counter = 1
         if not match.empty:
             specific_row = match.iloc[0]
@@ -93,7 +93,7 @@ class MediaManager:
         media = None
     
         df_n = pd.read_csv("Netflix.csv")
-        match = df_n[df_n['title'].lower() == title]
+        match = df_n[df_n['title'].str.lower() == title]
         if not match.empty:
             specific_row = match.iloc[0]
             source = "Netflix"
@@ -101,7 +101,7 @@ class MediaManager:
         
         else:
             df_p = pd.read_csv("Prime.csv")
-            match = df_p[df_p['title'].lower() == title]
+            match = df_p[df_p['title'].str.lower() == title]
             if not match.empty:
                 specific_row = match.iloc[0]
                 source = "Prime"
@@ -341,33 +341,32 @@ def main():
     """
     user_input = Input()
     user_input.show_welcome()
-    title, genre, platform, status = user_input.questions()
-    user_input.option()
     
-    rec_genre = user_input.get_rec_genre() # pulls genre input
-
+    title, genre, platform, status = user_input.questions()
+    # if user want to find a movie or tv show
+    # ask them to enter a title 
+    # then call the method 
+    # this method will find which platform the media is in and ask if they want to add to watchlist
     media_manager = MediaManager()
+    media_manager.where_to_watch(title)
+
     watchlist = media_manager.watchlist 
-
-    filter = Filters(media_manager, platform, watchlist)
-    # if genre inputted, call filters to filter by genre
-    if rec_genre:
-        print(filter.filter_by_genre(rec_genre))
-
-    MediaItem(title, rec_genre, platform) 
-
-    filters = Filters(media_manager, platform, watchlist)
 
     # if user wants to add media to completed list 
     # ask user what title and platform they want
     # then call the method
     media_manager.mark_completed(title, platform)
 
-    # if user want to find a movie or tv show
-    # ask them to enter a title 
-    # then call the method 
-    # this method will find which platform the media is in and ask if they want to add to watchlist
-    media_manager.where_to_watch(title)
+    user_input.option()
+    rec_genre = user_input.get_rec_genre() # pulls genre input
+    MediaItem(title, rec_genre, platform) 
+
+    filter = Filters(media_manager, platform, watchlist)
+    # if genre inputted, call filters to filter by genre
+    if rec_genre:
+        print(filter.filter_by_genre(rec_genre))
+
+    filters = Filters(media_manager, platform, watchlist)
 
     status = user_input.get_status_filter() # pulls status input
     # if status inputted, call filters to filter by status
