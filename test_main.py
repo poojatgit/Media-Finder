@@ -7,33 +7,45 @@ class TestMediaManager(unittest.TestCase):
         self.media = MediaManager()
 
     def test_mark_completed_found(self):
-        print("Found in mark_completed: ")
+        print("\n               MEDIA MANAGER TEST")
+        print("\nFound in mark_completed:")
         self.assertIsNone(self.media.mark_completed("Bridgerton", "Netflix"))
 
     def test_mark_completed_notfound(self):
-        print("Not Found in mark_completed: ")
+        print("\nNot Found in mark_completed: ")
         self.assertIsNone(self.media.mark_completed("Barbie", "Netflix"))
 
     def test_where_to_watch_found(self):
-        print("Found in where_to_watch: ")
+        print("\nFound in where_to_watch: ")
         self.assertIsNone(self.media.where_to_watch("Bridgerton"))
 
     def test_where_to_watch_notfound(self):
-        print("Not Found in where_to_watch: ")
+        print("\nNot Found in where_to_watch: ")
         self.assertIsNone(self.media.where_to_watch("Barbie"))
 
-# class TestMediaTracker(unittest.TestCase):
-#     def setUp(self):
-#         self.tracker = MediaTracker()
+class TestMediaTracker(unittest.TestCase):
+    def setUp(self):
+        self.tracker = MediaTracker()
 
-#     def test_add_title(self):
-#         self.assertIsNone(self.tracker.add_title("Barbie", "Fantasy", "Netflix"))
+    def test_add_title(self):
+        print("\n                  * * * * * * *              ")
+        print("\n               MEDIA TRACKER TEST")
+        print("\nAdd Title: ")
+        self.tracker.add_title("Barbie", "Fantasy", "Netflix")
+        self.assertEqual(len(self.tracker.watchlist), 1)
+        self.assertEqual(self.tracker.watchlist[0].title, "Barbie")
 
-#     def test_generate_recommendations(self):
-#         self.assertIsNone(self.tracker.generate_recommendations())
+    def test_generate_recommendations(self):
+        print("\nGenerate Recommendations: ")
+        self.tracker.watchlist = [MediaItem("Barbie", "Fantasy", "Netflix")]
+        self.assertIsNone(self.tracker.generate_recommendations())
 
-#     def test_get_similar_titles(self):
-#         self.assertIsNone(self.tracker.get_similar_titles("Fantasy"))
+    def test_get_similar_titles(self):
+        print("\nSimilar Titles: ")
+        self.tracker.watchlist = [MediaItem("Barbie", "Fantasy", "Netflix"), MediaItem("The Boys", "Action", "Prime")]
+        similar = self.tracker.get_similar_titles("Fantasy")
+        self.assertEqual(len(similar), 1)
+        self.assertEqual(similar[0].title, "Barbie")
 
 # class TestFilters(unittest.TestCase):
 #     def test_filter_by_genre(self):
