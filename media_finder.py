@@ -304,10 +304,10 @@ class Input:
         """
         print("What would you like to do today?")
         pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Find Movies/Tv Shows, (4)Quit: (1/2/3/4) ")
-        while (pick != 1) or (pick !=2) or (pick != 3) or (pick != 4):
+        while (pick != "1") and (pick != "2") and (pick != "3") and (pick != "4"):
             pick = input("Try Again!\nMake sure to enter 1,2,3, or 4 as your option! ")
 
-        if pick == 4:
+        if pick == "4":
             quit 
 
         return pick
@@ -330,10 +330,7 @@ class Input:
         Returns:
             dict: A dictionary containing all user responses.
         """
-        title = self.get_title()
-        genre = self.get_genre()
-        platform = self.get_platform()
-        status = self.get_status()
+        title, genre, platform, status = self.questions()
         start_year, end_year = self.get_year_range()
 
         return {
@@ -393,40 +390,41 @@ def main():
     Calls different classes with required inputs.
     """
     user_input = Input()
-    title = user_input.get_title()
-    rec_genre = user_input.get_rec_genre() # pulls genre input
-    platform = user_input.get_platform()
-
-
-    MediaItem(title, rec_genre, platform)
-
-    media_manager = MediaManager() 
+    user_input.show_welcome()
+    user_input.questions()
+    user_input.option()
+    user_input.get_year_range()
     
+    rec_genre = user_input.get_rec_genre() # pulls genre input
+
+    media_manager = MediaManager()
+    inputs = user_input.get_all_inputs()
     watchlist = media_manager.watchlist 
 
-    filters = Filters(media_manager, platform, watchlist)
+    filter = Filters(media_manager, inputs['platform'], watchlist)
+    # if genre inputted, call filters to filter by genre
+    if rec_genre:
+        print(filter.filter_by_genre(rec_genre))
+
+    MediaItem(inputs['title'], rec_genre, inputs['platform']) 
+
+    filters = Filters(media_manager, inputs['platform'], watchlist)
 
     # if user wants to add media to completed list 
     # ask user what title and platform they want
     # then call the method
-    media_manager.mark_completed(title, platform)
+    media_manager.mark_completed(inputs['title'], inputs['platform'])
 
     # if user want to find a movie or tv show
     # ask them to enter a title 
     # then call the method 
     # this method will find which platform the media is in and ask if they want to add to watchlist
-    media_manager.where_to_watch(title)
-
-
-    # if genre inputted, call filters to filter by genre
-    if rec_genre:
-        print(filters.filter_by_genre(rec_genre))
+    media_manager.where_to_watch(inputs['title'])
 
     status = user_input.get_status_filter() # pulls status input
     # if status inputted, call filters to filter by status
     if status:
         print(filters.filter_by_status(status))
-
 
 if __name__ == "__main__":
     main()      
