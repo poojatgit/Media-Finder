@@ -38,8 +38,8 @@ class MediaManager:
     Manages the watchlist and completed items using MediaItem objects
 
     Attributes:
-    watchlist (dict): users watchlist filled with MediaItem objects
-    completed (dict): users completed movies/shows filled with MediaItem objects
+        watchlist (dict): users watchlist filled with MediaItem objects
+        completed (dict): users completed movies/shows filled with MediaItem objects
     
     """
     def __init__(self):
@@ -48,11 +48,11 @@ class MediaManager:
 
     def mark_completed(self, title, platform):
         """
-        adds completed media into a dictionary to keep track
+        Adds completed media into a dictionary to keep track
 
         Args:
-        title (str): title of the movie/show
-        platform (str): platform of the movie/show
+            title (str): title of the movie/show
+            platform (str): platform of the movie/show
         """
         yes = input(f"Do you want to mark {title} as completed? (yes/no): ").strip().lower()
 
@@ -99,10 +99,10 @@ class MediaManager:
 
     def where_to_watch(self, title):
         """
-        finds the platform where the media located, then adds to watchlist
+        Finds the platform where the media located, then adds to watchlist
 
         Args:
-        title (str): title of the movie/show
+            title (str): title of the movie/show
         """
         title = title.strip().lower()
         source = ""
@@ -139,7 +139,7 @@ class MediaManager:
 
 class MediaTracker:
     """
-    A class representing tracking of a user's watchlist by giving reccommendations and filtering
+    A class representing tracking of a user's watchlist by giving personalized suggestions. 
 
     Attributes:
         watchlist (list): The list of MediaItem objects added by the user. 
@@ -164,7 +164,7 @@ class MediaTracker:
 
     def generate_recommendations(self):
         """
-        generates reccommended titles based on the titles in the user watchlist
+        Generates reccommended titles based on the titles in the user watchlist
         """
         # notify user when watchlist empty
         if not self.watchlist:
@@ -194,7 +194,10 @@ class MediaTracker:
 
     def get_similar_titles(self, genre):
         """
-        returns list of titles in watchlist that match given genre
+        Returns list of titles in watchlist that match given genre
+
+        Returns:
+            list: list of media items in user watchlist that match given genre
         """
         # list of media items in watchlist that match given genre
         match_genre = [item for item in self.watchlist if genre in item.genre]
