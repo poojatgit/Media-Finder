@@ -4,7 +4,7 @@ MediaItem: Driver/Navigator - Pooja
 MediaManager: Driver/Navigator - Andrea, Pooja 
 Recommendations: Driver/Navigator - Angela, Kabya
 Filters: Driver/Navigator - Angela, Andrea
-Input: Driver/Navigator - Kabya, Pooja, Andrea, Angela
+Input: Driver/Navigator - Kabya, Pooja
 Main: Andrea, Angela, Pooja
 
 """
