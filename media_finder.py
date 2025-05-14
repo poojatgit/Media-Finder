@@ -341,16 +341,13 @@ def main():
     """
     user_input = Input()
     user_input.show_welcome() # print welcom message
-    
+    media_manager = MediaManager()
     option = user_input.option() # asks user what they want to do
 
     while option != "4":
         title, genre, platform, status = user_input.questions() # collects information 
 
         if option == "1":
-            media_manager = MediaManager()
-            # media_manager.where_to_watch(title)
-
             watchlist = media_manager.watchlist 
 
             filter = Filters(media_manager, platform, watchlist)
@@ -375,14 +372,9 @@ def main():
 
         elif option == "3":
             media_manager.where_to_watch(title)
-
-            watchlist = media_manager.watchlist 
-
             media_manager.mark_completed(title, platform)
-            MediaItem(title, genre, platform)
 
-        elif option == "4":
-            quit 
+            MediaItem(title, genre, platform)
 
         option = user_input.option()
 
