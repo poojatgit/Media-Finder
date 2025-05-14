@@ -242,15 +242,9 @@ class Filters():
             list: A list representation of MediaItem instances that matches status for user. 
         """
         status = status.strip().lower() 
-        completed_filter = [] # list for completed media items
-        incompleted_filter = [] # list for incompleted media items
+        completed_filter = list(self.media_manager.completed.values()) # list for completed media items
+        incompleted_filter = list(self.media_manager.watchlist.values()) # list for incompleted media items
         
-        for media in self.watchlist.values():
-            if media.status.lower() == "completed":
-                completed_filter.append(media) 
-            else:
-                incompleted_filter.append(media)
-
         # sorts lists by movie title
         completed_filter.sort(key=lambda x: x.title) 
         incompleted_filter.sort(key=lambda x: x.title)    
@@ -303,11 +297,11 @@ class Input:
             int - represents the function they want to do 
         """
         print("What would you like to do today?")
-        pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Find Movies/Tv Shows, (4)Quit: (1/2/3/4) ")
-        while (pick != "1") and (pick != "2") and (pick != "3") and (pick != "4"):
+        pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Quit: (1/2/3) ")
+        while (pick != "1") and (pick != "2") and (pick != "3"):
             pick = input("Try Again!\nMake sure to enter 1,2,3, or 4 as your option! ")
 
-        if pick == "4":
+        if pick == "3":
             quit 
 
         return pick
@@ -356,22 +350,31 @@ def main():
     # ask user what title and platform they want
     # then call the method
     media_manager.mark_completed(title, platform)
+    MediaItem(title, genre, platform)
 
-    user_input.option()
-    rec_genre = user_input.get_rec_genre() # pulls genre input
-    MediaItem(title, rec_genre, platform) 
+    option = user_input.option()
 
-    filter = Filters(media_manager, platform, watchlist)
-    # if genre inputted, call filters to filter by genre
-    if rec_genre:
-        print(filter.filter_by_genre(rec_genre))
+    if option == "1":
+        filter = Filters(media_manager, platform, watchlist)
+        rec_genre = user_input.get_rec_genre() # pulls genre input
+        
+        # if genre inputted, call filters to filter by genre
+        if rec_genre:
+            print(filter.filter_by_genre(rec_genre))
 
-    filters = Filters(media_manager, platform, watchlist)
+        filters = Filters(media_manager, platform, watchlist)
 
-    status = user_input.get_status_filter() # pulls status input
-    # if status inputted, call filters to filter by status
-    if status:
-        print(filters.filter_by_status(status))
+        status = user_input.get_status_filter() # pulls status input
+        # if status inputted, call filters to filter by status
+        if status:
+            print(filters.filter_by_status(status))
+    elif option == "2":
+        personalized_recs = MediaTracker()
+        personalized_recs.add_title(title, genre, platform)
+        personalized_recs.generate_recommendations()
+        personalized_recs.get_similar_titles(genre)
+    elif option == "3":
+        media_manager.where_to_watch(title)
 
 if __name__ == "__main__":
     main()      
