@@ -44,41 +44,47 @@ class MediaManager:
         title (str): title of the movie/show
         platform (str): platform of the movie/show
         """
-        title = title.strip().lower()
-        platform = platform.strip().lower()
+        yes = input(f"Do you want to mark {title} as completed? (yes/no): ").strip().lower()
 
-        df = None
-        if platform == "netflix":
-            df = pd.read_csv("Netflix.csv")
+        if yes == "yes":
 
-        elif platform == "prime":
-            df = pd.read_csv("Prime.csv")
+            title = title.strip().lower()
+            platform = platform.strip().lower()
 
-        else:
-            print("Platform not available. Use 'Netflix' or 'Prime'")
-            return
-        
-        match = df[df['title'].str.lower() == title]
-        counter = 1
-        if not match.empty:
-            specific_row = match.iloc[0]
-            media = MediaItem(specific_row['title'], specific_row['Genre'], platform)
-            self.completed[counter] = media 
-            counter += 1
-            print(f"{specific_row['title']} marked as completed!")
+            df = None
+            if platform == "netflix":
+                df = pd.read_csv("Netflix.csv")
 
-        else:
-            print(f"{title} not found in {platform}")
-            # Added an option were they can enter movie themselves manually
-            manual = input("Do you want to add it manually? (yes/no): ").strip().lower()
-            if manual == "yes":
-                genre = input("Enter genre: ").strip()
-                media = MediaItem(title, platform, genre)
-                self.completed[counter] = media
-                print(f"{title} manually marked completed!")
-            
+            elif platform == "prime":
+                df = pd.read_csv("Prime.csv")
+
             else:
-                print("Manual entry skipped")
+                print("Platform not available. Use 'Netflix' or 'Prime'")
+                return
+            
+            match = df[df['title'].str.lower() == title]
+            counter = 1
+            if not match.empty:
+                specific_row = match.iloc[0]
+                media = MediaItem(specific_row['title'], specific_row['Genre'], platform)
+                self.completed[counter] = media 
+                counter += 1
+                print(f"{specific_row['title']} marked as completed!\n")
+
+            else:
+                print(f"{title} not found in {platform}")
+                # Added an option were they can enter movie themselves manually
+                manual = input("Do you want to add it manually? (yes/no): ").strip().lower()
+                if manual == "yes":
+                    genre = input("Enter genre: ").strip()
+                    media = MediaItem(title, platform, genre)
+                    self.completed[counter] = media
+                    print(f"{title} manually marked completed!\n")
+                
+                else:
+                    print("Manual entry skipped\n")
+        else:
+            print(f"{title} will not be marked completed!\n")
 
 
     def where_to_watch(self, title):
@@ -109,15 +115,15 @@ class MediaManager:
 
 
         if media:
-            print(f"Found: {media}")
+            print(f"Found: {media}\n")
             should_add = input("Do you want to add this to your watchlist? (yes/no): ").strip().lower()
             
             if should_add == "yes":
                 self.watchlist[title] = media
-                print(f"{title} added to watchlist!")           
+                print(f"{title} added to watchlist!\n")           
 
         else:
-                print(f"{title} is not found.")       
+                print(f"\n{title} is not found.\n")       
 
 
 
@@ -287,6 +293,7 @@ class Input:
         genre = input("Enter the genre: ").strip()
         platform = input("Enter the platform (Netflix or Prime): ").strip().capitalize()
         status = input("Enter status (Watched/Unwatched): ").strip().capitalize()
+        print("\n                             * * * * * * * * * *                                       \n")
         return title, genre, platform, status
     
     def option(self):
@@ -296,10 +303,12 @@ class Input:
         Returns:
             int - represents the function they want to do 
         """
+        print("                             * * * * * * * * * *                                       \n")
         print("What would you like to do today?")
-        pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Quit: (1/2/3) ")
-        while (pick != "1") and (pick != "2") and (pick != "3"):
-            pick = input("Try Again!\nMake sure to enter 1,2, or 3 as your option! ")
+        pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Add to Watchlist/Completed, (4)Quit: (1/2/3/4) ")
+        print("\n                             * * * * * * * * * *                                      \n")
+        while (pick != "1") and (pick != "2") and (pick != "3") and (pick != "4"):
+            pick = input("Try Again!\nMake sure to enter 1, 2, 3, or 4 as your option! ")
 
         return pick
 
@@ -331,49 +340,54 @@ def main():
     Calls different classes with required inputs.
     """
     user_input = Input()
-    user_input.show_welcome()
+    user_input.show_welcome() # print welcom message
     
-    option = user_input.option()
+    option = user_input.option() # asks user what they want to do
 
-    title, genre, platform, status = user_input.questions()
-    # if user want to find a movie or tv show
-    # ask them to enter a title 
-    # then call the method 
-    # this method will find which platform the media is in and ask if they want to add to watchlist
-    media_manager = MediaManager()
-    media_manager.where_to_watch(title)
+    while option != "4":
+        title, genre, platform, status = user_input.questions() # collects information 
 
-    watchlist = media_manager.watchlist 
+        if option == "1":
+            media_manager = MediaManager()
+            # media_manager.where_to_watch(title)
 
-    # if user wants to add media to completed list 
-    # ask user what title and platform they want
-    # then call the method
-    media_manager.mark_completed(title, platform)
-    MediaItem(title, genre, platform)
+            watchlist = media_manager.watchlist 
 
+            filter = Filters(media_manager, platform, watchlist)
+            rec_genre = user_input.get_rec_genre() # pulls genre input
+
+            # if genre inputted, call filters to filter by genre
+            if rec_genre:
+                print(filter.filter_by_genre(rec_genre))
+
+            filters = Filters(media_manager, platform, watchlist)
+
+            status = user_input.get_status_filter() # pulls status input
+            # if status inputted, call filters to filter by status
+            if status:
+                print(filters.filter_by_status(status))
+
+        elif option == "2":
+            personalized_recs = MediaTracker()
+            personalized_recs.add_title(title, genre, platform)
+            personalized_recs.generate_recommendations()
+            personalized_recs.get_similar_titles(genre)
+
+        elif option == "3":
+            media_manager.where_to_watch(title)
+
+            watchlist = media_manager.watchlist 
+
+            media_manager.mark_completed(title, platform)
+            MediaItem(title, genre, platform)
+
+        elif option == "4":
+            quit 
+
+        option = user_input.option()
+
+    print(f"Thank You for trying out Media Finder!\n")
     
-
-    if option == "1":
-        filter = Filters(media_manager, platform, watchlist)
-        rec_genre = user_input.get_rec_genre() # pulls genre input
-
-        # if genre inputted, call filters to filter by genre
-        if rec_genre:
-            print(filter.filter_by_genre(rec_genre))
-
-        filters = Filters(media_manager, platform, watchlist)
-
-        status = user_input.get_status_filter() # pulls status input
-        # if status inputted, call filters to filter by status
-        if status:
-            print(filters.filter_by_status(status))
-    elif option == "2":
-        personalized_recs = MediaTracker()
-        personalized_recs.add_title(title, genre, platform)
-        personalized_recs.generate_recommendations()
-        personalized_recs.get_similar_titles(genre)
-    elif option == "3":
-        quit 
 
 if __name__ == "__main__":
     main()      
