@@ -47,15 +47,23 @@ class TestMediaTracker(unittest.TestCase):
         self.assertEqual(len(similar), 1)
         self.assertEqual(similar[0].title, "Barbie")
 
-# class TestFilters(unittest.TestCase):
-#     def test_filter_by_genre(self):
-#         media = MediaManager("Barbie", "Comedy/Fantasy", "Netflix")
-#         filter = Filters(media, "netflix", media.watchlist)        
-#         self.assertIsNone(media.filter_by_genre("Comedy/Fantasy"))
+class TestFilters(unittest.TestCase):
+    def setUp(self):
+        self.media = MediaManager()
+        self.filter = Filters(self.media, "netflix", self.media.watchlist)
 
-#     def test_filter_by_status(self):
-#         media = MediaItem("Barbie", "Comedy/Fantasy", "Netflix")        
-#         self.assertIsNone(media.filter_by_status())
+    def test_filter_by_genre(self):
+        print("\n                  * * * * * * *              ")
+        print("\n                  FILTERS TEST")
+        print("\nFilter by Genre: ")
+        filtered = self.filter.filter_by_genre("Action")
+        self.assertTrue(len(filtered) > 0)
+
+    def test_filter_by_status(self):
+        print("\nFilter by Status: ")
+        self.media.mark_completed("Bridgerton", "Netflix")
+        completed = self.filter.filter_by_status("completed")
+        self.assertEqual(completed[0].title, "Bridgerton")
 
 # class TestInput(unittest.TestCase):
 #     def test_get_title(self):
