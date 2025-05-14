@@ -299,7 +299,7 @@ class Input:
         print("What would you like to do today?")
         pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Quit: (1/2/3) ")
         while (pick != "1") and (pick != "2") and (pick != "3"):
-            pick = input("Try Again!\nMake sure to enter 1,2,3, or 4 as your option! ")
+            pick = input("Try Again!\nMake sure to enter 1,2, or 3 as your option! ")
 
         return pick
 
@@ -334,7 +334,7 @@ def main():
     user_input.show_welcome()
     
     option = user_input.option()
-    
+
     title, genre, platform, status = user_input.questions()
     # if user want to find a movie or tv show
     # ask them to enter a title 
