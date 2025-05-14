@@ -284,7 +284,7 @@ class Input:
             tuple - consisting of the title, genre, platform, and status
         """
         title = input("Enter the movie/show title: ").strip()
-        genre = input("Enter the genre (or press Enter to skip): ").strip()
+        genre = input("Enter the genre: ").strip()
         platform = input("Enter the platform (Netflix or Prime): ").strip().capitalize()
         status = input("Enter status (Watched/Unwatched): ").strip().capitalize()
         return title, genre, platform, status
@@ -300,9 +300,6 @@ class Input:
         pick = input("(1)Filter Recommendations, (2)Personalized Suggestions, (3)Quit: (1/2/3) ")
         while (pick != "1") and (pick != "2") and (pick != "3"):
             pick = input("Try Again!\nMake sure to enter 1,2,3, or 4 as your option! ")
-
-        if pick == "3":
-            quit 
 
         return pick
 
@@ -357,7 +354,7 @@ def main():
     if option == "1":
         filter = Filters(media_manager, platform, watchlist)
         rec_genre = user_input.get_rec_genre() # pulls genre input
-        
+
         # if genre inputted, call filters to filter by genre
         if rec_genre:
             print(filter.filter_by_genre(rec_genre))
@@ -374,7 +371,7 @@ def main():
         personalized_recs.generate_recommendations()
         personalized_recs.get_similar_titles(genre)
     elif option == "3":
-        media_manager.where_to_watch(title)
+        quit 
 
 if __name__ == "__main__":
     main()      
