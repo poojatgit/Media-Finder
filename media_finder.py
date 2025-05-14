@@ -333,6 +333,8 @@ def main():
     user_input = Input()
     user_input.show_welcome()
     
+    option = user_input.option()
+    
     title, genre, platform, status = user_input.questions()
     # if user want to find a movie or tv show
     # ask them to enter a title 
@@ -349,7 +351,7 @@ def main():
     media_manager.mark_completed(title, platform)
     MediaItem(title, genre, platform)
 
-    option = user_input.option()
+    
 
     if option == "1":
         filter = Filters(media_manager, platform, watchlist)
